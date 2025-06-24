@@ -2,17 +2,6 @@ import React, { useState } from "react";
 import "./App.css";
 import movies from "./data/movies.json";
 
-const Movie = ({ title, year }) => {
-  return (
-    <div className="movie-card">
-      <div className="movie-info">
-        <h3 className="movie-title">{title}</h3>
-        <p className="movie-year">{year}</p>
-      </div>
-    </div>
-  );
-};
-
 export const App = () => {
   const [searchTerm, setSearchTerm] = useState("");
 
