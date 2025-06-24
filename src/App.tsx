@@ -3,6 +3,7 @@ import "./App.css";
 import movies from "./data/movies.json";
 import { MovieType } from "./core/dominio/Movie";
 import { Movie } from "./test/components/Movie";
+import { searchMovieByTitle } from "./core/aplicacion/filterByTitleService";
 
 export const App = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -14,15 +15,8 @@ export const App = () => {
     setAllFilms(moviesFromJson);
   }, []);
 
-  const searchFilmByTitle = (searchTerm: string) => {
-    const filteredFilms = allFilms.filter((movies) =>
-      movies.title.toLowerCase().includes(searchTerm.toLowerCase())
-    );
-    return filteredFilms;
-  };
-
   useEffect(() => {
-    setFilteredFilm(searchFilmByTitle(searchTerm));
+    setFilteredFilm(searchMovieByTitle(searchTerm, allFilms));
   }, [searchTerm]);
 
   return (
