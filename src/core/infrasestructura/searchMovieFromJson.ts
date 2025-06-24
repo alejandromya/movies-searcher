@@ -1,12 +1,23 @@
 import { MovieType } from "../dominio/Movie";
-import { MovieRepository } from "../dominio/MovieRepository";
+import {
+  FindAllMoviesRepository,
+  SearchMovieByTextRepository,
+} from "../dominio/MovieRepository";
+import movies from "../../data/movies.json";
+import { FindAllBy } from "@testing-library/react";
 
-export class MovieFromJsonRepository implements MovieRepository {
-  searchMovieByTitle(searchingText: string, movie: MovieType[]) {
+export class MovieFromJsonRepository implements SearchMovieByTextRepository {
+  searchMovieByTitle(searchingText: string) {
     if (searchingText.trim() === "") return [];
-    const filteredFilms = movie.filter((movies) =>
+    const filteredFilms = movies.filter((movies) =>
       movies.title.toLowerCase().includes(searchingText.toLowerCase())
     );
     return filteredFilms;
+  }
+}
+
+export class AllMoviesRepository implements FindAllMoviesRepository {
+  findAllMovies() {
+    return movies;
   }
 }

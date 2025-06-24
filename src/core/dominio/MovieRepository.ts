@@ -1,5 +1,9 @@
 import { MovieType } from "./Movie";
 
-export interface MovieRepository {
-  searchMovieByTitle(searchingText: string, films: MovieType[]);
+export interface SearchMovieByTextRepository {
+  searchMovieByTitle(searchingText: string): MovieType[];
+}
+
+export interface FindAllMoviesRepository {
+  findAllMovies(): MovieType[];
 }

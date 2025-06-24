@@ -1,29 +1,31 @@
 import { useEffect, useState } from "react";
 import "./App.css";
-import movies from "./data/movies.json";
 import { MovieType } from "./core/dominio/Movie";
-import { Movie } from "./test/components/Movie";
-import { MovieFromJsonRepository } from "./core/infrasestructura/searchMovieFromJson";
+import { Movie } from "./components/Movie";
+import {
+  AllMoviesRepository,
+  MovieFromJsonRepository,
+} from "./core/infrasestructura/searchMovieFromJson";
 import { SearchMovieByTitleService } from "./core/aplicacion/filterByTitleService";
+import { FindAllMoviesService } from "./core/aplicacion/findAllMoviesService";
 
 export const App = () => {
   const [searchText, setSearchText] = useState("");
-  const [allFilms, setAllFilms] = useState<MovieType[]>([]);
   const [filteredFilm, setFilteredFilm] = useState<MovieType[]>([]);
+  const [allMovies, setAllMovies] = useState<MovieType[]>([]);
 
   useEffect(() => {
-    const moviesFromJson = movies;
-    setAllFilms(moviesFromJson);
+    const movies = new FindAllMoviesService(
+      new AllMoviesRepository()
+    ).findAllMovies();
+    setAllMovies(movies);
   }, []);
 
   useEffect(() => {
     const SearchMovieInstance = new SearchMovieByTitleService(
       new MovieFromJsonRepository()
     );
-    const filteredMovies = SearchMovieInstance.searchMovieByText(
-      searchText,
-      allFilms
-    );
+    const filteredMovies = SearchMovieInstance.searchMovieByText(searchText);
     setFilteredFilm(filteredMovies);
   }, [searchText]);
 
@@ -55,8 +57,8 @@ export const App = () => {
             películas por título
           </p>
           <p>
-            📊 <strong>Datos disponibles:</strong> {movies.length} películas en
-            el archivo movies.json
+            📊 <strong>Datos disponibles:</strong> {allMovies.length} películas
+            en el archivo movies.json
           </p>
         </div>
       </main>

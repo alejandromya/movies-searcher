@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { MovieType } from "../../core/dominio/Movie";
-import { sendLike } from "../../core/aplicacion/like";
+import { MovieType } from "../core/dominio/Movie";
+import { sendLike } from "../core/aplicacion/like";
 
 export const Movie = ({ title, year }: MovieType) => {
   const [isLiked, setIsLiked] = useState(false);
