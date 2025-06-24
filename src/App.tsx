@@ -1,9 +1,29 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./App.css";
 import movies from "./data/movies.json";
+import { MovieType } from "./core/dominio/Movie";
+import { Movie } from "./test/components/Movie";
 
 export const App = () => {
   const [searchTerm, setSearchTerm] = useState("");
+  const [allFilms, setAllFilms] = useState<MovieType[]>([]);
+  const [filteredFilm, setFilteredFilm] = useState<MovieType[]>([]);
+
+  useEffect(() => {
+    const moviesFromJson = movies;
+    setAllFilms(moviesFromJson);
+  }, []);
+
+  const searchFilmByTitle = (searchTerm: string) => {
+    const filteredFilms = allFilms.filter((movies) =>
+      movies.title.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+    return filteredFilms;
+  };
+
+  useEffect(() => {
+    setFilteredFilm(searchFilmByTitle(searchTerm));
+  }, [searchTerm]);
 
   return (
     <div className="App">
@@ -22,8 +42,10 @@ export const App = () => {
             className="search-input"
           />
         </div>
-
-        {/* Tu código aquí */}
+        {filteredFilm &&
+          filteredFilm.map((film) => {
+            return <Movie key={film.id} title={film.title} year={film.year} />; // ← Ahora sí retorna
+          })}
 
         <div className="placeholder">
           <p>
