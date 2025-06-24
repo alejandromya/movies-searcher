@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import "./App.css";
 import movies from "./data/movies.json";
 import { MovieType } from "./core/dominio/Movie";
