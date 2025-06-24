@@ -3,7 +3,8 @@ import "./App.css";
 import movies from "./data/movies.json";
 import { MovieType } from "./core/dominio/Movie";
 import { Movie } from "./test/components/Movie";
-import { searchMovieByTitle } from "./core/aplicacion/filterByTitleService";
+import { MovieFromJsonRepository } from "./core/infrasestructura/searchMovieFromJson";
+import { SearchMovieByTitleService } from "./core/aplicacion/filterByTitleService";
 
 export const App = () => {
   const [searchText, setSearchText] = useState("");
@@ -16,7 +17,14 @@ export const App = () => {
   }, []);
 
   useEffect(() => {
-    setFilteredFilm(searchMovieByTitle(searchText, allFilms));
+    const SearchMovieInstance = new SearchMovieByTitleService(
+      new MovieFromJsonRepository()
+    );
+    const filteredMovies = SearchMovieInstance.searchMovieByText(
+      searchText,
+      allFilms
+    );
+    setFilteredFilm(filteredMovies);
   }, [searchText]);
 
   return (
