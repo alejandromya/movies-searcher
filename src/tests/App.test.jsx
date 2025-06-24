@@ -20,4 +20,20 @@ describe("App Component", () => {
     const title = screen.getByText(filmToFind);
     expect(title).toBeInTheDocument();
   });
+
+  it(" doesnt display anything if I text something and erase it", async () => {
+    render(<App />);
+
+    const textbox = await screen.findByRole("textbox");
+    const textToSearch = "arab";
+    await userEvent.type(textbox, textToSearch.toLowerCase());
+    const filmToFind = "Lawrence of Arabia";
+    const title = screen.getByText(filmToFind);
+    expect(title).toBeInTheDocument();
+
+    await userEvent.clear(textbox);
+    const filmToFind2 = "Lawrence of Arabia";
+    const title2 = screen.queryByText(filmToFind2);
+    expect(title2).not.toBeInTheDocument();
+  });
 });

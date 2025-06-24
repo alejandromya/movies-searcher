@@ -6,7 +6,7 @@ import { Movie } from "./test/components/Movie";
 import { searchMovieByTitle } from "./core/aplicacion/filterByTitleService";
 
 export const App = () => {
-  const [searchTerm, setSearchTerm] = useState("");
+  const [searchText, setSearchText] = useState("");
   const [allFilms, setAllFilms] = useState<MovieType[]>([]);
   const [filteredFilm, setFilteredFilm] = useState<MovieType[]>([]);
 
@@ -16,8 +16,8 @@ export const App = () => {
   }, []);
 
   useEffect(() => {
-    setFilteredFilm(searchMovieByTitle(searchTerm, allFilms));
-  }, [searchTerm]);
+    setFilteredFilm(searchMovieByTitle(searchText, allFilms));
+  }, [searchText]);
 
   return (
     <div className="App">
@@ -31,8 +31,8 @@ export const App = () => {
           <input
             type="text"
             placeholder="Buscar películas por título..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
+            value={searchText}
+            onChange={(e) => setSearchText(e.target.value)}
             className="search-input"
           />
         </div>
