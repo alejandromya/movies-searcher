@@ -1,9 +1,10 @@
 import { MovieType } from "../dominio/Movie";
 import { SearchMovieByTextRepository } from "../dominio/MovieRepository";
 
-export class SearchMovieByTitleService {
-  constructor(private movieRepository: SearchMovieByTextRepository) {}
-  searchMovieByText = (searchingText: string): MovieType[] => {
-    return this.movieRepository.searchMovieByTitle(searchingText);
+export const searchMovieByTitleService = (
+  movieRepository: SearchMovieByTextRepository
+) => {
+  return (searchingText: string): MovieType[] => {
+    return movieRepository.searchMovieByTitle(searchingText);
   };
-}
+};

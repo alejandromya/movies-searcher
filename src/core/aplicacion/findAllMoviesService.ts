@@ -1,10 +1,10 @@
 import { MovieType } from "../dominio/Movie";
-import { SearchMovieByTextRepository } from "../dominio/MovieRepository";
-import { AllMoviesRepository } from "../infrasestructura/searchMovieFromJson";
+import { FindAllMoviesRepository } from "../dominio/MovieRepository";
 
-export class FindAllMoviesService {
-  constructor(private movieRepository: AllMoviesRepository) {}
-  findAllMovies = (): MovieType[] => {
-    return this.movieRepository.findAllMovies();
+export const findAllMoviesService = (
+  movieRepository: FindAllMoviesRepository
+) => {
+  return (): MovieType[] => {
+    return movieRepository.findAllMovies();
   };
-}
+};

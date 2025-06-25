@@ -2,12 +2,13 @@ import { useEffect, useState } from "react";
 import "./App.css";
 import { MovieType } from "./core/dominio/Movie";
 import { Movie } from "./components/Movie";
-import {
-  AllMoviesRepository,
-  MovieFromJsonRepository,
-} from "./core/infrasestructura/searchMovieFromJson";
-import { SearchMovieByTitleService } from "./core/aplicacion/filterByTitleService";
-import { FindAllMoviesService } from "./core/aplicacion/findAllMoviesService";
+import { movieFromJsonRepository } from "./core/infrasestructura/searchMovieFromJson";
+import { searchMovieByTitleService } from "./core/aplicacion/filterByTitleService";
+import { findAllMoviesService } from "./core/aplicacion/findAllMoviesService";
+import { allMoviesRepository } from "./core/infrasestructura/searchAllmovies";
+
+//import { FindAllMoviesService } from "./core/aplicacion/findAllMoviesService";
+//import { AllMoviesRepository } from "./core/infrasestructura/searchAllmovies";
 
 export const App = () => {
   const [searchText, setSearchText] = useState("");
@@ -15,17 +16,15 @@ export const App = () => {
   const [allMovies, setAllMovies] = useState<MovieType[]>([]);
 
   useEffect(() => {
-    const movies = new FindAllMoviesService(
-      new AllMoviesRepository()
-    ).findAllMovies();
+    const movies = findAllMoviesService(allMoviesRepository);
     setAllMovies(movies);
   }, []);
 
   useEffect(() => {
-    const SearchMovieInstance = new SearchMovieByTitleService(
-      new MovieFromJsonRepository()
+    const searchMovieInstance = searchMovieByTitleService(
+      movieFromJsonRepository
     );
-    const filteredMovies = SearchMovieInstance.searchMovieByText(searchText);
+    const filteredMovies = searchMovieInstance(searchText);
     setFilteredFilm(filteredMovies);
   }, [searchText]);
 
